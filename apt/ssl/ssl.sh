@@ -16,6 +16,9 @@ else
   SUDO="" # To support docker environment
 fi
 
+# Require
+$SDUO $APT update && $SUDO $APT install -y --no-install-recommends curl wget ca-certificates
+
 # Update
-wget -P /usr/local/share/ca-certificates/ https://raw.githubusercontent.com/taehun-kmu/shellscript/main/ssl/KMU.crt
+$SUDO wget -P /usr/local/share/ca-certificates/ https://raw.githubusercontent.com/taehun-kmu/auto/main/apt/ssl/KMU.crt
 $SUDO update-ca-certificates
