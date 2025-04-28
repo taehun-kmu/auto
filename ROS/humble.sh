@@ -28,27 +28,27 @@ else
 fi
 
 # Installation
-$SUDO $APT update && $SUDO $APT install -y --no-install-recommends software-properties-common
-$SUDO add-apt-repository universe
+$SUDO $APT update && $SUDO $APT install -y --no-install-recommends software-properties-common gpg-agent
+$SUDO add-apt-repository universe -y
 
 # Add a repository and enroll a key
 $SUDO $APT update && $SUDO $APT install -y --no-install-recommends curl
 $SUDO curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | $SUDO tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 # Install development tools
-$SUDO $APT update && $SUDO $APT install ros-dev-tools
+$SUDO $APT update && $SUDO $APT install -y ros-dev-tools
 
 # Installing ROS2
-$SUDO $APT install ros-humble-desktop-full
+$SUDO $APT install -y ros-humble-desktop-full
 
 # Install development tools (colcon)
-$SUDO $APT install python3-colcon-common-extensions
+$SUDO $APT install -y python3-colcon-common-extensions
 
 # Install DDS (fastRTPS -> CycloneDDS)
-$SUDO $APT install ros-humble-rmw-cyclonedds-cpp
+$SUDO $APT install -y ros-humble-rmw-cyclonedds-cpp
 
 # Installing rosdep and vcstool
-$SUDO $APT  install python3-rosdep python3-vcstool
+$SUDO $APT  install -y python3-rosdep python3-vcstool
 $SUDO rosdep init && rosdep update
 
