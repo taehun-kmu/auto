@@ -32,7 +32,7 @@ $SUDO $APT update && $SUDO $APT install -y --no-install-recommends curl
 curl https://sh.rustup.rs -sSf | sh -s -- -y && . $HOME/.cargo/env
 rustup update stable
 
-packages=(
+packages="
   tealdeer
   choose
   du-dust
@@ -49,7 +49,7 @@ packages=(
   zellij
   yazi-fm
   yazi-cli
-)
+"
 
 cargo install cargo-quickinstall cargo-binstall
 
