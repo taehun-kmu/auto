@@ -1,0 +1,42 @@
+#!/bin/bash
+set -e
+
+command_exists() {
+  command -v "$@" > /dev/null 2>&1
+}
+
+user_can_sudo() {
+  command_exists sudo || return 1
+  ! LANG= sudo -n -v 2>&1 | grep -q "may not run sudo"
+}
+
+if user_can_sudo; then
+  SUDO="sudo"
+else
+  SUDO="" # To support docker environment
+fi
+
+user_can_apt() {
+  command_exists apt-fast || return 1
+  ! LANG= apt-fast -n -v 2>&1 | grep -q "may not run apt-fast"
+}
+
+if user_can_apt; then
+  APT="apt-fast"
+else
+  APT="apt-get" # Basic command
+fi
+
+# Installation
+$SUDO $APT update && $SUDO $APT install -y --no-install-recommends software-properties-common gpg-agent
+$SUDO add-apt-repository universe -y
+
+# Add a repository and enroll a key
+$SUDO $APT update && $SUDO $APT install -y --no-install-recommends curl
+$SUDO curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | $SUDO tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+
+# Installation Gazebo
+$SUDO $APT update
+$SUDO $APT install -y gz-harmonic ros-humble-ros-gzharmonic
+
