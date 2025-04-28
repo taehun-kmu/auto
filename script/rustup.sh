@@ -53,7 +53,7 @@ packages="
 
 cargo install cargo-quickinstall cargo-binstall
 
-for pkg in "${packages[@]}"; do
+for pkg in $packages; do
   cargo quickinstall "$pkg"
 done
 
