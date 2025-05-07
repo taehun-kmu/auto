@@ -32,6 +32,6 @@ $SUDO $APT update && $SUDO $APT install -y --no-install-recommends git ninja-bui
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/taehun-kmu/auto/main/script/gcc.sh)"
 
-git clone -b v0.11.0 --depth=1 https://github.com/neovim/neovim.git $HOME/.neovim && cd $HOME/.neovim
+git clone -b v0.11.0 --depth=1 https://github.com/neovim/neovim.git $HOME/.neovim
 
-make CMAKE_BUILD_TYPE=Release && sudo make install
+cd && $HOME/.neovim && make CMAKE_BUILD_TYPE=Release && sudo make install
