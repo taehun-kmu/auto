@@ -34,6 +34,5 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/taehun-kmu/auto/main/scrip
 
 cd && git clone -b v0.11.0 --depth=1 https://github.com/neovim/neovim.git .neovim
 
-cd .neovim
-make CMAKE_BUILD_TYPE=Release
-sudo make install
+cd .neovim && make CMAKE_BUILD_TYPE=Release && sudo make install
+
